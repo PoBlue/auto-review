@@ -88,6 +88,12 @@ function clickSaveButton() {
     }).click();
 }
 
+var RATE = {
+    'awesome': 'awesome',
+    'suggestion': 'nitpick',
+    'require': 'critical'
+};
+
 //例如：点击 Code Review 标签
 clickTab('Code Review');
 
@@ -97,11 +103,6 @@ clickFile('js/resources.js');
 //点击第 10 行的代码
 mouseDownInCode(10);
 
-var RATE = {
-    'awesome': 'awesome',
-    'suggestion': 'nitpick',
-    'require': 'critical'
-};
 //reviewRate
 reviewRate(RATE.awesome);
 
