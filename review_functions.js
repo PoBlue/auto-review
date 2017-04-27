@@ -88,6 +88,18 @@ function clickSaveButton() {
     }).click();
 }
 
+function isLoadedTab() {
+    return $("#page-content .container-fluid").children().filter(function () {
+        return $(this).attr("ng-show") == "loading";
+    }).hasClass('ng-hide');
+}
+
+function isLoadedCode() {
+    return $(".code-section-item-body .ng-isolate-scope").children().filter(function () {
+        return $(this).attr("ng-show") == "isLoading";
+    }).hasClass('ng-hide');
+}
+
 var RATE = {
     'awesome': 'awesome',
     'suggestion': 'nitpick',
