@@ -100,6 +100,12 @@ function isLoadedCode() {
     }).hasClass('ng-hide');
 }
 
+function isSavedComment() {
+    return $(".comment-container button").filter(function (){
+        return $(this).attr("busy-click") == "submitComment()"; 
+    }).prop('disabled');
+}
+
 var RATE = {
     'awesome': 'awesome',
     'suggestion': 'nitpick',
