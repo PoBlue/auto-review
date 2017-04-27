@@ -106,6 +106,12 @@ function isSavedComment() {
     }).prop('disabled');
 }
 
+function isLoadedPageContent() {
+    return $('#page-content .container-fluid').children().filter(function () {
+        return $(this).attr("ng-show") == "loading";
+    }).hasClass('ng-hide');
+}
+
 var RATE = {
     'awesome': 'awesome',
     'suggestion': 'nitpick',
