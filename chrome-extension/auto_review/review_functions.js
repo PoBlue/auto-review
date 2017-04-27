@@ -118,20 +118,20 @@ var RATE = {
     'require': 'critical'
 };
 
-//例如：点击 Code Review 标签
-clickTab('Code Review');
+// //例如：点击 Code Review 标签
+// clickTab('Code Review');
 
-//点击文件
-clickFile('js/resources.js');
+// //点击文件
+// clickFile('js/resources.js');
 
-//点击第 10 行的代码
-mouseDownInCode(10);
+// //点击第 10 行的代码
+// mouseDownInCode(10);
 
-//reviewRate
-reviewRate(RATE.awesome);
+// //reviewRate
+// reviewRate(RATE.awesome);
 
-//review comment
-reviewComment("hello,world");
+// //review comment
+// reviewComment("hello,world");
 
-//click save button
-clickSaveButton();
+// //click save button
+// clickSaveButton();
