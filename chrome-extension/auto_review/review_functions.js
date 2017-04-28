@@ -105,10 +105,9 @@ function isLoadedCode() {
     }).hasClass('ng-hide');
 }
 
-function isSavedComment() {
-    return $(".comment-container button").filter(function (){
-        return $(this).attr("busy-click") == "submitComment()"; 
-    }).prop('disabled');
+function isSavedComment(lineNumber) {
+    return $(".CodeMirror-code").children().eq(lineNumber - 1)
+            .find(".CodeMirror-linewidget").length !== 0;
 }
 
 function isLoadedPageContent() {
