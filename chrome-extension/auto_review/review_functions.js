@@ -66,6 +66,11 @@ function mouseDownInCode(lineNumber) {
     dispatchEvent(elements[0], event);
 }
 
+function isLoadedReviewRates () {
+    var editor = $(".comment-editor:not(.ng-hide)");
+    return editor.find("input").length !== 0;
+}
+
 //建议评价
 function reviewRate(rate) {
     var editor = $(".comment-editor:not(.ng-hide)");
