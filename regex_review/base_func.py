@@ -1,5 +1,6 @@
 import re
 import os
+import json
 
 
 def parse_file(path, regex):
@@ -31,6 +32,67 @@ def get_filepaths(directory):
 
     return file_paths
 
+
+class AllReviewsData():
+    """
+    class for storing all reviews data
+    """
+    def __init__(self, json_file):
+        self.current = 0
+        with open(json_file, 'r') as f:
+            self.data = json.load(f)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current < self.get_length():
+            review = self.get_review(self.current)
+            self.current += 1
+            return review
+        else:
+            raise StopIteration
+
+    def get_length(self):
+        return 2
+
+    def get_reviews(self):
+        """
+        get reviews
+        """
+        return self.data['reviews']
+
+    def get_review(self, i):
+        """
+        get review with index
+        """
+        return ReviewData(self.data['reviews'][i])
+
+
+class ReviewData():
+    """
+    class for an review data
+    """
+    def __init__(self, data):
+        self.data = data
+
+    def get_regex(self):
+        """
+        get regural expression
+        """
+        return self.data['regex']
+
+    def get_comment(self):
+        """
+        get review comment
+        """
+        return self.data['comment']
+
+    def get_rate(self):
+        """
+        get rete
+        """
+        return self.data['rate']
 # # --TEST--
 # # Run the above function and store its results in a variable.
 # rel_file_paths = get_filepaths("/Users/blues/Desktop/ArcadeGame-4")

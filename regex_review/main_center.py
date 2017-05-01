@@ -1,12 +1,14 @@
-from base_func import get_filepaths, parse_file
+from base_func import get_filepaths, parse_file, AllReviewsData
 
-# --TEST--
-# Run the above function and store its results in a variable.
-rel_file_paths = get_filepaths("/Users/blues/Desktop/ArcadeGame-4")
+DIR_PATH = "/Users/blues/Desktop/ArcadeGame-4"
+REL_FILE_PATHS = get_filepaths(DIR_PATH)
 
-for path in rel_file_paths:
+for review_data in AllReviewsData("data/fend_p5.json"):
+    print("rate: %s, comment: %s, regex: %s" % (review_data.get_comment(),
+                                                review_data.get_rate(),
+                                                review_data.get_regex()))
+
+for path in REL_FILE_PATHS:
+    LINE_NUMBER = parse_file('/Users/blues/Desktop/test.js', 'return')
     print(path)
-
-# test parse file
-LINE_NUMBER = parse_file('/Users/blues/Desktop/test.js', 'return')
-print("line num: %d" % (LINE_NUMBER))
+    print("line num: %d" % (LINE_NUMBER))
