@@ -1,3 +1,4 @@
+"""this module have basic function for pasing file"""
 import re
 import os
 import json
@@ -11,6 +12,8 @@ def parse_file(path, regex):
     with open(path, 'rb') as file:
         data = file.read().decode('utf-8')
         pos = pattern.search(data)
+        if pos is None:
+            return None
         line_number = data.count('\n', 0, pos.start())
         return line_number
 
@@ -39,8 +42,8 @@ class AllReviewsData():
     """
     def __init__(self, json_file):
         self.current = 0
-        with open(json_file, 'r') as f:
-            self.data = json.load(f)
+        with open(json_file, 'r') as file:
+            self.data = json.load(file)
 
     def __iter__(self):
         return self
@@ -54,7 +57,10 @@ class AllReviewsData():
             raise StopIteration
 
     def get_length(self):
-        return 2
+        """
+        get the length of reviews
+        """
+        return len(self.get_reviews())
 
     def get_reviews(self):
         """
@@ -93,6 +99,50 @@ class ReviewData():
         get rete
         """
         return self.data['rate']
+
+
+class JsReviewData():
+    """
+    easy for creating review data structure
+    """
+    def __init__(self):
+        self.all_datas = []
+
+    def add_review(self, path, review):
+        """
+        add review to specify path
+        """
+        for data in self.all_datas:
+            if data['path'] == path:
+                data['reviews'].append(review)
+                return
+        new_data = {}
+        new_data['path'] = path
+        new_data['reviews'] = [review]
+        self.all_datas.append(new_data)
+
+    def to_json(self):
+        """
+        convert data to json string
+        """
+        return json.dumps(self.all_datas)
+
+
+def regex_dir(dir_path, selected_files, data_file):
+    """
+    parse file and return js review data json
+    """
+    js_review_data = JsReviewData()
+    for review in AllReviewsData(data_file):
+        for path in selected_files:
+            line_number = parse_file(dir_path + path, review.get_regex())
+            if line_number is not None:
+                new_review_data = {}
+                new_review_data["LineNum"] = line_number
+                new_review_data["comment"] = review.get_comment()
+                new_review_data["rate"] = review.get_rate()
+                js_review_data.add_review(path, new_review_data)
+    return js_review_data
 # # --TEST--
 # # Run the above function and store its results in a variable.
 # rel_file_paths = get_filepaths("/Users/blues/Desktop/ArcadeGame-4")
@@ -103,4 +153,3 @@ class ReviewData():
 # # test parse file
 # ln = parse_file('/Users/blues/Desktop/test.js', 'return')
 # print("line num: %d" % (ln))
-

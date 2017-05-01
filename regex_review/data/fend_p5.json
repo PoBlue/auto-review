@@ -1,9 +1,13 @@
 { "reviews": [{
-    "regex": "startflags",
+    "regex": "enemynum",
     "comment": "for the test",
     "rate": "suggestion"
 },{
     "regex": "enemynum",
     "comment": "test 2",
     "rate": "awesome"
+},{
+    "regex": "startflag",
+    "comment": "for the test",
+    "rate": "suggestion"
 }]}
