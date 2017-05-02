@@ -1,4 +1,4 @@
-var DATA = [{"path": "js/app.js", "reviews": [{"rate": "suggestion", "lineNum": 117, "comment": "for the test"}, {"rate": "awesome", "lineNum": 117, "comment": "test 2"}, {"rate": "suggestion", "lineNum": 0, "comment": "for the test"}]}, {"path": "js/engine.js", "reviews": [{"rate": "suggestion", "lineNum": 41, "comment": "for the test"}]}];
+var DATA = [{"reviews": [{"rate": "suggestion", "comment": "for the test", "lineNum": 117}, {"rate": "awesome", "comment": "test 2", "lineNum": 117}, {"rate": "suggestion", "comment": "for the test", "lineNum": 0}], "path": "js/app.js"}, {"reviews": [{"rate": "suggestion", "comment": "for the test", "lineNum": 41}], "path": "js/engine.js"}];
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -275,19 +275,6 @@ var RATE = {
 
 // //click save button
 // clickSaveButton();
-var DATA = [{
-    "path": "build.gradle",
-    "reviews": [{
-        "lineNum": 2,
-        "comment": "awesome code",
-        "rate": "awesome"
-    }, {
-        "lineNum": 5,
-        "comment": "you are well done",
-        "rate": "awesome"
-    }]
-}];
-
 var reviewData = new ReviewData(DATA);
 var autoReview = new AutoReview(reviewData);
 autoReview.start();
