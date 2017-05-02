@@ -7,6 +7,4 @@ function injectFile(fileName) {
     };
 }
 
-injectFile('auto_review/tool.js');
-injectFile('auto_review/review_functions.js');
-injectFile('auto_review/main.js');
+injectFile('auto_review/result.js');

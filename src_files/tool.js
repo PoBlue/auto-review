@@ -1,15 +1,36 @@
-var DATA = [{
-    "path": "build.gradle",
-    "reviews": [{
-        "lineNum": 2,
-        "comment": "awesome code",
-        "rate": "awesome"
-    }, {
-        "lineNum": 5,
-        "comment": "you are well done",
-        "rate": "awesome"
-    }]
-}];
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+var Repeat = function(time, func) {
+    this.time = time;
+    this.func = func; 
+    this.isEnd = false;
+    this.index = 0;
+};
+
+Repeat.prototype.repeateInInterval = function (){
+    var self = this;
+    if (self.isEnd === true) {
+        return;
+    }
+    sleep(self.time).then(() => {
+        self.func();
+        self.repeateInInterval();
+    });
+};
+
+Repeat.prototype.repeateWithIndex = function (totalTime) {
+    var self = this;
+    if (self.index > totalTime || self.isEnd === true){
+        return;
+    }
+    sleep(self.time).then(() => {
+        self.func(self.index);
+        self.index = self.index + 1;
+        self.repeateWithIndex(totalTime);
+    });
+};
 
 var ReviewData = function(data) {
     this.data = data;
@@ -112,7 +133,3 @@ AutoReview.prototype.saved = function () {
     }
     console.log("finished");
 };
-
-var reviewData = new ReviewData(DATA);
-var autoReview = new AutoReview(reviewData);
-autoReview.start();

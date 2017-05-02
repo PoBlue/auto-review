@@ -138,7 +138,7 @@ def regex_dir(dir_path, selected_files, data_file):
             line_number = parse_file(dir_path + path, review.get_regex())
             if line_number is not None:
                 new_review_data = {}
-                new_review_data["LineNum"] = line_number
+                new_review_data["lineNum"] = line_number
                 new_review_data["comment"] = review.get_comment()
                 new_review_data["rate"] = review.get_rate()
                 js_review_data.add_review(path, new_review_data)
