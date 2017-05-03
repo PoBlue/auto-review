@@ -48,9 +48,9 @@ class Parser(object):
                     for line in infile:
                         outfile.write(line)
 
-parser = Parser()
-parser.set_review_args(SELECTED_FILE_PATHS, DIR_PATH, get_filepaths("data/")[0])
-parser.creat_chorme_excfile()
+# parser = Parser()
+# parser.set_review_args(SELECTED_FILE_PATHS, DIR_PATH, get_filepaths("data/")[0])
+# parser.creat_chorme_excfile()
 
-# creat_chorme_excfile()
-print(regex_dir(DIR_PATH, SELECTED_FILE_PATHS, "data/" + get_filepaths("data/")[0]).to_json())
+# # creat_chorme_excfile()
+# print(regex_dir(DIR_PATH, SELECTED_FILE_PATHS, "data/" + get_filepaths("data/")[0]).to_json())

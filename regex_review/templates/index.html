@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>auto reviewer setting</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div>
+        <form action="/" method="post">
+            <fieldset>
+                <legend>选择要自动 Review 的文件</legend>
+                {% for file_path in file_paths %}
+                <div>
+                    <input type="checkbox" class="file-paths" name="file-paths" value="{{ file_path }}">
+                    <label>{{ file_path }}</label>
+                </div>
+                {% endfor %}
+            </fieldset>
+
+            <fieldset>
+                <legend>项目 Review 的数据</legend>
+                {% for data_path in data_paths %}
+                <div>
+                    <input type="radio" class="data-paths" name="data-path" value="{{ data_path }}">
+                    <label>{{ data_path }}</label>
+                </div>
+                {% endfor %}
+            </fieldset>
+            <input id="submit-btn" type="submit" value="提交">
+        </form>
+    </div>
+</body>
+</html>

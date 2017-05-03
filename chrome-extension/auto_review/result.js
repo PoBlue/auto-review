@@ -1,4 +1,4 @@
-var DATA = [{"reviews": [{"rate": "suggestion", "comment": "for the test", "lineNum": 117}, {"rate": "awesome", "comment": "test 2", "lineNum": 117}, {"rate": "suggestion", "comment": "for the test", "lineNum": 0}], "path": "js/app.js"}, {"reviews": [{"rate": "suggestion", "comment": "for the test", "lineNum": 41}], "path": "js/engine.js"}];
+var DATA = [{"reviews": [{"comment": "for the test", "lineNum": 117, "rate": "suggestion"}, {"comment": "test 2", "lineNum": 117, "rate": "awesome"}, {"comment": "for the test", "lineNum": 0, "rate": "suggestion"}], "path": "js/app.js"}];
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
