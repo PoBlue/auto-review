@@ -1,28 +1,22 @@
 """this is the main logic to parse file and ui controler"""
 from base_func import get_filepaths, regex_dir
+from os.path import dirname, abspath
 
 DIR_PATH = "/Users/blues/Desktop/ArcadeGame-4/"
-DATA_FILE = "data/fend_p5.json"
 REL_FILE_PATHS = get_filepaths(DIR_PATH)
 
 SELECTED_FILE_PATHS = ["js/app.js", "js/engine.js"]
-PROJECT_PATH = "/Users/blues/Desktop/auto-review/"
-CHORME_PATH = "chrome-extension/auto_review/"
-
-FILENAMES = ["src_files/tool.js",
-             "src_files/review_functions.js",
-             "src_files/main.js"]
 
 
 class Parser(object):
     """
     parse file and then create file that chrome can excute
     """
-    def __init__(self, project_path):
+    def __init__(self):
         self.selected_file_paths = []
         self.review_data_path = ""
         self.review_project_path = ""
-        self.project_path = project_path
+        self.project_path = dirname(dirname(abspath(__file__))) + "/"
         self.chorme_path = "chrome-extension/auto_review/"
         self.src_files_js = ["src_files/tool.js",
                              "src_files/review_functions.js",
@@ -35,7 +29,7 @@ class Parser(object):
         """
         self.selected_file_paths = selected_paths
         self.review_project_path = review_project_path
-        self.review_data_path = review_data_path
+        self.review_data_path = "data/" + review_data_path
 
     def creat_chorme_excfile(self):
         """
@@ -54,9 +48,9 @@ class Parser(object):
                     for line in infile:
                         outfile.write(line)
 
-parser = Parser(PROJECT_PATH)
-parser.set_review_args(SELECTED_FILE_PATHS, DIR_PATH, DATA_FILE)
+parser = Parser()
+parser.set_review_args(SELECTED_FILE_PATHS, DIR_PATH, get_filepaths("data/")[0])
 parser.creat_chorme_excfile()
 
 # creat_chorme_excfile()
-print(regex_dir(DIR_PATH, SELECTED_FILE_PATHS, DATA_FILE).to_json())
+print(regex_dir(DIR_PATH, SELECTED_FILE_PATHS, "data/" + get_filepaths("data/")[0]).to_json())
