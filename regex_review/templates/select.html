@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>选择项目</title>
+</head>
+
+<body>
+    <fieldset>
+        <legend>项目</legend>
+        {% for project_path in project_paths %}
+        <div>
+            <input type="radio" class="project-paths" name="project-path" value="{{ project_path }}">
+            <label>{{ project_path }}</label>
+        </div>
+        {% endfor %}
+    </fieldset>
+
+    <input type="submit" value="Submit">
+</body>
+
+</html>

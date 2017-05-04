@@ -4,11 +4,11 @@ hadler for web page
 """
 from flask import Flask, request, render_template
 from main_center import Parser
-from base_func import get_filepaths
+from base_func import get_filepaths, get_immediate_subdirectories
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/review', methods=['GET', 'POST'])
 def request_handle():
     """
     handle request from web
@@ -17,6 +17,19 @@ def request_handle():
         return handle_post(request.form)
     else:
         return handle_get()
+
+
+@app.route('/', methods=['GET', 'POST'])
+def setting_handle():
+    """
+    set project dir path
+    """
+    project_dir = request.args.get('project-path')
+    if project_dir != "" and project_dir is not None:
+        all_project_paths = get_immediate_subdirectories(project_dir + "/")
+        return render_template('select.html', project_paths=all_project_paths)
+    else:
+        return render_template('setdir.html')
 
 
 def handle_post(form):
