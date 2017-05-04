@@ -1,4 +1,4 @@
-var DATA = [{"reviews": [{"comment": "for the test", "lineNum": 117, "rate": "suggestion"}, {"comment": "test 2", "lineNum": 117, "rate": "awesome"}, {"comment": "for the test", "lineNum": 0, "rate": "suggestion"}], "path": "js/app.js"}];
+var DATA = [{"path": "js/app.js", "reviews": [{"rate": "suggestion", "lineNum": 117, "comment": "for the test"}, {"rate": "awesome", "lineNum": 117, "comment": "test 2"}, {"rate": "suggestion", "lineNum": 0, "comment": "for the test"}]}, {"path": "js/engine.js", "reviews": [{"rate": "suggestion", "lineNum": 41, "comment": "for the test"}]}];
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -278,3 +278,5 @@ var RATE = {
 var reviewData = new ReviewData(DATA);
 var autoReview = new AutoReview(reviewData);
 autoReview.start();
+
+console.log("hello,world");

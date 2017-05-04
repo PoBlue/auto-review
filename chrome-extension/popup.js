@@ -8,12 +8,7 @@ var files = ['auto_review/dependencies/jquery-3.2.1.min.js',
 
 function click(e) {
   if (e.target.id === "start") {
-    files.forEach(function (fileName) {
-      chrome.tabs.executeScript(null,
-        {
-          file: fileName
-        });
-    });
+    chrome.tabs.executeScript(null, {file: "contentscript.js"});
     window.close();
   }
 }
