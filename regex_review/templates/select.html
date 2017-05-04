@@ -7,17 +7,18 @@
 </head>
 
 <body>
-    <fieldset>
-        <legend>项目</legend>
-        {% for project_path in project_paths %}
-        <div>
-            <input type="radio" class="project-paths" name="project-path" value="{{ project_path }}">
-            <label>{{ project_path }}</label>
-        </div>
-        {% endfor %}
-    </fieldset>
-
-    <input type="submit" value="Submit">
+    <form action="/" method="post">
+        <fieldset>
+            <legend>项目</legend>
+            {% for project_path in project_paths %}
+            <div>
+                <input type="radio" class="project-paths" name="select-project-path" value="{{ project_path }}">
+                <label>{{ project_path }}</label>
+            </div>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value="Submit">
+    </form>
 </body>
 
 </html>
