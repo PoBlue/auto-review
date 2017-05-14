@@ -1,4 +1,4 @@
-var DATA = [{"reviews": [{"lineNum": 0, "comment": "\u901a\u5e38\u5728\u7f16\u5199 html \u65f6\uff0c\u5728\u5f00\u5934\u7b2c\u4e00\u884c\u6dfb\u52a0 `Doctype` \u7684\u4ee3\u7801\u544a\u8bc9\u6d4f\u89c8\u5668\u6211\u4eec\u7528\u7684\u662f\u4ec0\u4e48\u7248\u672c\u7684 html \uff0c\u8ba9\u6d4f\u89c8\u5668\u66f4\u597d\u5730\u89e3\u6790\u5448\u73b0\u7f51\u9875\n```\n<!DOCTYPE html>```", "rate": "suggestion"}], "path": "notes.html"}];
+var DATA = [{"reviews": [{"lineNum": 0, "rate": "suggestion", "comment": "\u901a\u5e38\u5728\u7f16\u5199 html \u65f6\uff0c\u5728\u5f00\u5934\u7b2c\u4e00\u884c\u6dfb\u52a0 `Doctype` \u7684\u4ee3\u7801\u544a\u8bc9\u6d4f\u89c8\u5668\u6211\u4eec\u7528\u7684\u662f\u4ec0\u4e48\u7248\u672c\u7684 html \uff0c\u8ba9\u6d4f\u89c8\u5668\u66f4\u597d\u5730\u89e3\u6790\u5448\u73b0\u7f51\u9875\n```\n<!DOCTYPE html>```"}], "path": "notes.html"}];
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -198,7 +198,6 @@ function mouseEvent(type, sx, sy, cx, cy) {
   }
     evt.button = { 0:1, 1:4, 2:2 }[evt.button] || evt.button;
   }
-  console.log('create event');
   return evt;
 }
 
@@ -209,16 +208,12 @@ function dispatchEvent (el, evt) {
   } else if (el.fireEvent) {
     el.fireEvent('on' + type, evt);
   }
-  console.log('dispath event');
   return evt;
 }
 
 //点击第几行代码
 function mouseDownInCode(lineNumber) {
-    //test: console log 
-    console.log("mouse down in code: " + lineNumber);
-
-    var codeElement = $(".CodeMirror-code").children().eq(lineNumber - 1);
+    var codeElement = $(".CodeMirror-code").children().eq(lineNumber);
     var codeY = codeElement.offset().top - $(document).scrollTop();
 
     var event = mouseEvent("mousedown", 0, 0, 300, codeY);

@@ -58,7 +58,7 @@ function dispatchEvent (el, evt) {
 
 //点击第几行代码
 function mouseDownInCode(lineNumber) {
-    var codeElement = $(".CodeMirror-code").children().eq(lineNumber - 1);
+    var codeElement = $(".CodeMirror-code").children().eq(lineNumber);
     var codeY = codeElement.offset().top - $(document).scrollTop();
 
     var event = mouseEvent("mousedown", 0, 0, 300, codeY);
