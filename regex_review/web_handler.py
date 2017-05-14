@@ -45,6 +45,24 @@ def setting_handle():
             return render_template('setdir.html')
 
 
+@app.route('/reset/path')
+def reset_project_path():
+    """
+    reset project path
+    """
+    resp = make_response(render_template('setdir.html'))
+    resp.set_cookie('project-path', expires=0)
+    return resp
+
+
+@app.route('/data', methods=['GET', 'POST'])
+def review_data():
+    """
+    manuplate review data
+    """
+    return render_template('review_data.html')
+
+
 def has_value(value):
     return value != "" and value is not None
 

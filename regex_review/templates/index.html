@@ -8,6 +8,13 @@
 
 <body>
     <div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('setting_handle') }}">setting</a></li>
+                <li><a href="{{ url_for('review_data') }}">review data</a></li>
+                <li><a href="{{ url_for('reset_project_path') }}">reset project path</a></li>
+            </ul>
+        </nav>
         <form action="/review" method="post">
             <fieldset>
                 <legend>选择要自动 Review 的文件</legend>
@@ -33,4 +40,5 @@
         </form>
     </div>
 </body>
+
 </html>
