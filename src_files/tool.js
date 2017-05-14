@@ -60,6 +60,25 @@ ReviewData.prototype.getLineComment = function (pathIndex, reviewIndex) {
     return this.getReview(pathIndex, reviewIndex).comment;
 };
 
+ReviewData.prototype.getRate = function (pathIndex, reviewIndex) {
+    var returnRate = RATE.awesome;
+    switch (this.getReview(pathIndex, reviewIndex).rate){
+    case "awesome":
+        returnRate = RATE.awesome;
+        break;
+    case "suggestion":
+        returnRate = RATE.suggestion;
+        break;
+    case "require":
+        returnRate = RATE.require;
+        break;
+    default:
+        console.log('error in getRate funtion');
+    }
+    
+    return returnRate;
+};
+
 var AutoReview = function(reviewData){
     this.tab = "Code Review";
     this.pathIndex = 0;
@@ -110,7 +129,7 @@ AutoReview.prototype.selectCode = function () {
 AutoReview.prototype.comment = function () {
     var self = this;
     var lineNum = this.data.getLineNum(this.pathIndex, this.reviewIndex);
-    reviewRate(RATE.awesome);
+    reviewRate(this.data.getRate(this.pathIndex, this.reviewIndex));
     reviewComment(this.data.getLineComment(this.pathIndex,this.reviewIndex));
     clickSaveButton();
     var saveRepeat = new Repeat(1000, function () {

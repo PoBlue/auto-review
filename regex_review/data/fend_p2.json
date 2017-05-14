@@ -1,0 +1,7 @@
+{ "reviews": [{
+    "regex": "(?i)<!DOCTYPE html>",
+    "is_missed": true,
+    "comment": "通常在编写 html 时，在开头第一行添加 `Doctype` 的代码告诉浏览器我们用的是什么版本的 html ，让浏览器更好地解析呈现网页\n```\n<!DOCTYPE html>```",
+    "rate": "suggestion",
+    "default_num": 0
+}]}

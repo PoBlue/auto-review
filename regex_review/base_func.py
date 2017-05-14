@@ -108,6 +108,18 @@ class ReviewData():
         """
         return self.data['rate']
 
+    def get_default_num(self):
+        """
+        get default line number
+        """
+        return self.data['default_num']
+
+    def get_is_missed(self):
+        """
+        we can check if we should add review depend on the state
+        """
+        return self.data['is_missed']
+
 
 class JsReviewData():
     """
@@ -136,6 +148,17 @@ class JsReviewData():
         return json.dumps(self.all_datas)
 
 
+def generate_review_data(line_num, comment, rate):
+    """
+    generate review data to result file
+    """
+    new_review_data = {}
+    new_review_data["lineNum"] = line_num
+    new_review_data["comment"] = comment
+    new_review_data["rate"] = rate
+    return new_review_data
+
+
 def regex_dir(dir_path, selected_files, data_file):
     """
     parse file and return js review data json
@@ -145,11 +168,17 @@ def regex_dir(dir_path, selected_files, data_file):
         for path in selected_files:
             line_number = parse_file(dir_path + path, review.get_regex())
             if line_number is not None:
-                new_review_data = {}
-                new_review_data["lineNum"] = line_number
-                new_review_data["comment"] = review.get_comment()
-                new_review_data["rate"] = review.get_rate()
-                js_review_data.add_review(path, new_review_data)
+                if review.get_is_missed() is not True:
+                    new_review_data = generate_review_data(line_number,
+                                                           review.get_comment(),
+                                                           review.get_rate())
+                    js_review_data.add_review(path, new_review_data)
+            else:
+                if review.get_default_num() is not None:
+                    new_review_data = generate_review_data(review.get_default_num(),
+                                                           review.get_comment(),
+                                                           review.get_rate())
+                    js_review_data.add_review(path, new_review_data)
     return js_review_data
 # # --TEST--
 # # Run the above function and store its results in a variable.
