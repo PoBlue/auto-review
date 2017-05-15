@@ -120,6 +120,12 @@ class ReviewData():
         """
         return self.data['is_missed']
 
+    def get_pos_regex(self):
+        """
+        get the position that match regex to review
+        """
+        return self.data['pos_regex']
+
 
 class JsReviewData():
     """
@@ -166,20 +172,37 @@ def regex_dir(dir_path, selected_files, data_file):
     js_review_data = JsReviewData()
     for review in AllReviewsData(data_file):
         for path in selected_files:
-            line_number = parse_file(dir_path + path, review.get_regex())
-            if line_number is not None:
+            file_path = dir_path + path
+            new_review_data = generate_js_review_data(file_path,
+                                                      review,
+                                                      review.get_regex())
+            if new_review_data is not None:
                 if review.get_is_missed() is not True:
-                    new_review_data = generate_review_data(line_number,
-                                                           review.get_comment(),
-                                                           review.get_rate())
                     js_review_data.add_review(path, new_review_data)
             else:
-                if review.get_default_num() is not None:
-                    new_review_data = generate_review_data(review.get_default_num(),
-                                                           review.get_comment(),
-                                                           review.get_rate())
-                    js_review_data.add_review(path, new_review_data)
+                if review.get_pos_regex() is not None:
+                    for regex in review.get_pos_regex():
+                        new_review_data = generate_js_review_data(file_path,
+                                                                  review,
+                                                                  regex)
+                        if new_review_data is not None:
+                            js_review_data.add_review(path, new_review_data)
+                            break
     return js_review_data
+
+
+def generate_js_review_data(file_path, review, regex):
+    """
+    generate js review data
+    """
+    line_number = parse_file(file_path, regex)
+    if line_number is not None:
+        return generate_review_data(line_number,
+                                    review.get_comment(),
+                                    review.get_rate())
+    return None
+
+
 # # --TEST--
 # # Run the above function and store its results in a variable.
 # rel_file_paths = get_filepaths("/Users/blues/Desktop/ArcadeGame-4")

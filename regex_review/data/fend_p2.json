@@ -3,5 +3,17 @@
     "is_missed": true,
     "comment": "通常在编写 html 时，在开头第一行添加 `Doctype` 的代码告诉浏览器我们用的是什么版本的 html ，让浏览器更好地解析呈现网页\n```\n<!DOCTYPE html>```",
     "rate": "suggestion",
-    "default_num": 0
+    "pos_regex": ["<body>","<.+>"]
+},{
+    "regex": "</*body>",
+    "is_missed": true,
+    "comment": "一个完整的 HTML 文档的结构应为如下：\n```  <!DOCTYPE html>\n<html>\n<head>\n  <title>文档的标题</title>\n</head>\n\n<body>  文档的内容... ...\n</body>\n\n</html>\n```\n## 参考：\n- [HTML文档结构](http://www.debugrun.com/a/KAfq9TW.html)",
+    "rate": "suggestion",
+    "pos_regex": []
+},{
+    "regex": "<head>(.*\n)*.*<meta.*\\s+charset=\"utf-8\"\\s*>(.*\n)*</head>",
+    "is_missed": true,
+    "comment": "可以使用 [utf-8](http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html) 的字符集来解析这个 `HTML` 的文档, 使得浏览器能够用 utf-8 去解析中文, 而不会出现乱码\n\n```\n<head>\n  <meta charset=\"UTF-8\">\n  <title>标题</title>\n</head>\n``` ",
+    "rate": "suggestion",
+    "pos_regex": []
 }]}
