@@ -7,6 +7,9 @@ from base_func import get_filepaths, get_immediate_subdirectories
 
 
 def has_value(value):
+    """
+    check if value is empty value or None
+    """
     return value != "" and value is not None
 
 
@@ -55,8 +58,38 @@ def setting_page_get(request):
     if has_value(project_dir):
         all_project_paths = get_immediate_subdirectories(project_dir + "/")
         resp = make_response(render_template('select.html',
-                                                project_paths=all_project_paths))
+                                             project_paths=all_project_paths))
         resp.set_cookie('project-path', project_dir)
         return resp
     else:
         return render_template('setdir.html')
+
+
+def has_file(path, file_name):
+    """
+    check if path has file
+    """
+    all_file_name = get_filepaths(path)
+    for name in all_file_name:
+        if name == file_name:
+            return True
+    return False
+
+
+def create_review_file(name):
+    """
+    create review file with data
+    return:
+        - False: can not create file
+        - True: create file sucessfully
+    """
+    data = """{"reviews":[]}"""
+    file_name = name + ".json"
+    data_path = "data/"
+    file_path = data_path + file_name
+    if has_file(data_path, file_name):
+        return False
+
+    with open(file_path, "w") as data_file:
+        data_file.write(data)
+    return True

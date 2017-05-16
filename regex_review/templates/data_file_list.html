@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>review 数据文件</title>
+</head>
+
+<body>
+    <div>
+        <ul>
+            {% for data_path in data_paths %}
+            <li><a href="{{ url_for('data_edit', data_path=data_path) }}">{{ data_path }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <a href="{{ url_for('new_data_file') }}">create new data file</a>
+    </div>
+</body>
+
+</html>
