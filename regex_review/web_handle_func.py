@@ -96,14 +96,24 @@ def create_review_file(name):
     return True
 
 
-def save_review_data(form, data_path, review_dict):
+def save_review_data(form, data_path, review_dict, review_id=None):
     """
     add a new review data
     """
-    file_path = 'data/' + data_path
-    new_id = create_review_id(review_dict['reviews'])
+    if review_id is None:
+        new_id = create_review_id(review_dict['reviews'])
+    else:
+        new_id = review_id
     new_review_data = parser_data(form, new_id)
     review_dict['reviews'].append(new_review_data)
+    save_review_to_file(data_path, review_dict)
+
+
+def save_review_to_file(data_path, review_dict):
+    """
+    save review to file
+    """
+    file_path = 'data/' + data_path
     json_str = json.dumps(review_dict)
     with open(file_path, 'w') as review_f:
         review_f.write(json_str)
@@ -150,3 +160,18 @@ def parser_data(form, review_id):
     new_review_data['description'] = form['description']
     new_review_data['id'] = review_id
     return new_review_data
+
+
+def remove_review_data(data_path, review_id):
+    """
+    return a new review dict that specify id is removed
+    """
+    file_path = 'data/' + data_path
+    review_dict = json_file_to_dict(file_path)
+    remove_index = 0
+    for review_d in review_dict['reviews']:
+        if review_d['id'] == review_id:
+            review_dict['reviews'].remove(review_dict['reviews'][remove_index])
+            break
+        remove_index += 1
+    return review_dict

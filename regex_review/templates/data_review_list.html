@@ -11,6 +11,7 @@
             <li><a href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a></li>
         {% endfor %}
         </ul>
-        <a href="{{ url_for('add_new_data', data_path=data_path) }}">add new review data</a>
+        <a href="{{ url_for('add_new_data', data_path=data_path) }}">add new review data</a><br>
+        <a href="{{ url_for('review_data') }}">back</a>
     </body>
 </html>

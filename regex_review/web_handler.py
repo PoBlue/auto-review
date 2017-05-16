@@ -5,7 +5,7 @@ hadler for web page
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from main_center import Parser
 from base_func import get_filepaths, get_immediate_subdirectories
-from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data, json_file_to_dict
+from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data, json_file_to_dict, remove_review_data, save_review_to_file
 app = Flask(__name__)
 
 
@@ -70,13 +70,15 @@ def new_data_file():
         return "falure"
 
 
-@app.route('/data/<data_path>/<review_id>/edit', methods=['GET', 'POST'])
+@app.route('/data/<data_path>/<int:review_id>/edit', methods=['GET', 'POST'])
 def data_edit(data_path, review_id):
     """
     edit data in data path
     """
     if request.method == "POST":
-        return 'post'
+        review_dict = remove_review_data(data_path, review_id)
+        save_review_data(request.form, data_path, review_dict, review_id=review_id)
+        return redirect(url_for('data_list', data_path=data_path))
     elif request.method == "GET":
         return data_edit_page_get(data_path, review_id)
     else:
@@ -90,11 +92,21 @@ def data_edit_page_get(data_path, review_id):
     reviews = json_file_to_dict('data/' + data_path)['reviews']
     founded_review_data = {}
     for review_d in reviews:
-        if review_d['id'] == int(review_id):
+        if review_d['id'] == review_id:
             founded_review_data = review_d
     return render_template('data_review_edit.html',
                            data_path=data_path,
                            review=founded_review_data)
+
+
+@app.route('/data/<data_path>/<int:review_id>/remove')
+def data_remove(data_path, review_id):
+    """
+    remove review data in data path according review id
+    """
+    review_dict = remove_review_data(data_path, review_id)
+    save_review_to_file(data_path, review_dict)
+    return redirect(url_for('data_list', data_path=data_path))
 
 
 @app.route('/data/<data_path>/list')
