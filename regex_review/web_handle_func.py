@@ -4,6 +4,7 @@ this module store the funciton that handle the page get or post method
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from main_center import Parser
 from base_func import get_filepaths, get_immediate_subdirectories
+import json
 
 
 def has_value(value):
@@ -93,3 +94,60 @@ def create_review_file(name):
     with open(file_path, "w") as data_file:
         data_file.write(data)
     return True
+
+
+def save_review_data(form, data_path):
+    """
+    add a new review data
+    """
+    file_path = 'data/' + data_path
+    review_dict = json_file_to_dict(file_path)
+    new_id = create_review_id(review_dict['reviews'])
+    new_review_data = parser_data(form, new_id)
+    review_dict['reviews'].append(new_review_data)
+    json_str = json.dumps(review_dict)
+    with open(file_path, 'w') as review_f:
+        review_f.write(json_str)
+
+
+def create_review_id(all_reviews):
+    """
+    create a id for data
+    """
+    if not all_reviews:
+        return 0
+
+    largest_id = 0
+    for data in all_reviews:
+        if data['id'] > 0:
+            largest_id = data['id']
+    return largest_id + 1
+
+
+def json_file_to_dict(path):
+    """
+    paser a josn file to dict
+    """
+    with open(path, 'r') as review_file:
+        return json.load(review_file)
+
+
+def parser_data(form, review_id):
+    """
+    parser data from form
+    """
+    new_review_data = {}
+    new_review_data['regex'] = form['regex']
+    if has_value(form.get('is_missed')):
+        new_review_data['is_missed'] = True
+    else:
+        new_review_data['is_missed'] = False
+    new_review_data['comment'] = form['comment']
+    new_review_data['rate'] = form['rate']
+    if has_value(form.get('pos_regex')):
+        new_review_data['pos_regex'] = form['pos_regex']
+    else:
+        new_review_data['pos_regex'] = ""
+    new_review_data['description'] = form['description']
+    new_review_data['id'] = review_id
+    return new_review_data

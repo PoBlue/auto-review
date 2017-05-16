@@ -180,14 +180,13 @@ def regex_dir(dir_path, selected_files, data_file):
                 if review.get_is_missed() is not True:
                     js_review_data.add_review(path, new_review_data)
             else:
-                if review.get_pos_regex() is not None:
-                    for regex in review.get_pos_regex():
-                        new_review_data = generate_js_review_data(file_path,
-                                                                  review,
-                                                                  regex)
-                        if new_review_data is not None:
-                            js_review_data.add_review(path, new_review_data)
-                            break
+                if review.get_pos_regex() != "":
+                    regex = review.get_pos_regex()
+                    new_review_data = generate_js_review_data(file_path,
+                                                              review,
+                                                              regex)
+                    if new_review_data is not None:
+                        js_review_data.add_review(path, new_review_data)
     return js_review_data
 
 

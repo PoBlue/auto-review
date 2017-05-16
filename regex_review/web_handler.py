@@ -5,8 +5,7 @@ hadler for web page
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from main_center import Parser
 from base_func import get_filepaths, get_immediate_subdirectories
-from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file
-import json
+from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data
 app = Flask(__name__)
 
 
@@ -91,60 +90,6 @@ def add_new_data(data_path):
         return render_template("new_data_review.html", data_path=data_path)
     else:
         return "Error: other method in add_new_data"
-
-
-def save_review_data(form, data_path):
-    """
-    add a new review data
-    """
-    file_path = 'data/' + data_path
-    review_dict = json_file_to_dict(file_path)
-    new_id = create_review_id(review_dict['reviews'])
-    new_review_data = parser_data(form, new_id)
-    review_dict['reviews'].append(new_review_data)
-    json_str = json.dumps(review_dict)
-    with open(file_path, 'w') as review_f:
-        review_f.write(json_str)
-
-
-def create_review_id(all_reviews):
-    """
-    create a id for data
-    """
-    if not all_reviews:
-        return 0
-
-    largest_id = 0
-    for data in all_reviews:
-        if data['id'] > 0:
-            largest_id = data['id']
-    return largest_id + 1
-
-
-def json_file_to_dict(path):
-    """
-    paser a josn file to dict
-    """
-    with open(path, 'r') as review_file:
-        return json.load(review_file)
-
-
-def parser_data(form, review_id):
-    """
-    parser data from form
-    """
-    new_review_data = {}
-    new_review_data['regex'] = form['regex']
-    if has_value(form.get('is_missed')):
-        new_review_data['is_missed'] = True
-    else:
-        new_review_data['is_missed'] = False
-    new_review_data['comment'] = form['comment']
-    new_review_data['rate'] = form['rate']
-    if has_value(form.get('pos_regex')):
-        new_review_data['pos_regex'] = form['pos_regex']
-    new_review_data['id'] = review_id
-    return new_review_data
 
 
 if __name__ == '__main__':
