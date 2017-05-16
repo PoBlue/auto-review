@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """this module have basic function for pasing file"""
 import re
 import os
@@ -135,7 +136,7 @@ class ReviewData():
 
 class JsReviewData():
     """
-    easy for creating review data structure
+    easy for manuplating review data structure
     """
     def __init__(self):
         self.all_datas = []
@@ -158,6 +159,112 @@ class JsReviewData():
         convert data to json string
         """
         return json.dumps(self.all_datas)
+
+    def group_review_by_line_num(self):
+        """
+        group review if it's line is same
+        """
+        for path_data in self.all_datas:
+            grouped_data = group_item_by_key(path_data['reviews'], "lineNum")
+            combined_data = combine_review_in_same_key(grouped_data)
+            path_data['reviews'] = combined_data
+        print(self.all_datas)
+
+
+def group_item_by_key(datas, key):
+    """
+    return a dict that is grouped
+    """
+    grouped_data = {}
+    for item in datas:
+        grouped_data.setdefault(item[key], []).append(item)
+    return grouped_data
+
+
+def combine_review_in_same_key(datas):
+    """
+    combine review in same key
+    return:
+        array that is in same key
+    """
+    combined_reviews = []
+    for key, reviews in datas.items():
+        new_review = combine_reviews(reviews)
+        combined_reviews.append(new_review)
+    return combined_reviews
+
+
+def combine_reviews(reviews):
+    """
+    combine review in same line
+    """
+    new_review = reviews[0]
+    combined_comment = new_review['comment']
+    combined_desc = new_review['description']
+    results = combine_comment_and_desc(reviews)
+    if results is not None:
+        combined_comment, combined_desc = results
+    new_review['comment'] = combined_comment
+    new_review['description'] = combined_desc
+    rate = suggestion_rate(reviews)
+    if rate is not None:
+        new_review['rate'] = rate
+    return new_review
+
+
+def combine_comment_and_desc(reviews):
+    """
+    produce a new review
+    """
+    comment_template = "#建议 %s ✨ %s \n---------\n %s \n"
+    description_template = "%s %s: %s\n"
+    reviews_len = len(reviews)
+    if reviews_len <= 1:
+        return None
+
+    combined_comment = ""
+    combined_desc = ""
+    for i in range(0, reviews_len):
+        review_data = reviews[i]
+        marker = get_marker(review_data['rate'])
+        if i == 0:
+            combined_comment = comment_template % (i + 1,
+                                                   marker,
+                                                   review_data['comment'])
+            combined_desc = description_template % (i + 1,
+                                                    marker,
+                                                    review_data['description'])
+        else:
+            combined_comment += comment_template % (i + 1,
+                                                    marker,
+                                                    review_data['comment'])
+            combined_desc += description_template % (i + 1,
+                                                     marker,
+                                                     review_data['description'])
+    return (combined_comment, combined_desc)
+
+
+def suggestion_rate(reviews):
+    """
+    return the suggestion rate for the grouped review
+    """
+    for review_data in reviews:
+        rate = review_data['rate']
+        if rate == "require":
+            return rate
+    return None
+
+
+def get_marker(rate):
+    """
+    return a marker for review
+    """
+    if rate == "awesome":
+        return "(做得不错的点)"
+    elif rate == "suggestion":
+        return ""
+    elif rate == "require":
+        return "(下面这一点需要修改才能通过项目)"
 
 
 def generate_review_data(line_num, review):

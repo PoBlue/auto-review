@@ -39,10 +39,11 @@ class Parser(object):
         data_code = "var DATA = %s;\n"
         result_path = self.project_path + self.chorme_path + 'result.js'
         with open(result_path, 'w') as outfile:
-            outfile.write(data_code % (regex_dir(self.review_project_path,
-                                                 self.selected_file_paths,
-                                                 self.review_data_path)
-                                       .to_json()))
+            review_data = regex_dir(self.review_project_path,
+                                    self.selected_file_paths,
+                                    self.review_data_path)
+            review_data.group_review_by_line_num()
+            outfile.write(data_code % (review_data.to_json()))
             for fname in self.src_files_js:
                 with open(self.project_path + fname) as infile:
                     for line in infile:
