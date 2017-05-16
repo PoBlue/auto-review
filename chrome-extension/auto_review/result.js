@@ -1,4 +1,4 @@
-var DATA = [{"reviews": [{"lineNum": 0, "rate": "suggestion", "comment": "\u901a\u5e38\u5728\u7f16\u5199 html \u65f6\uff0c\u5728\u5f00\u5934\u7b2c\u4e00\u884c\u6dfb\u52a0 `Doctype` \u7684\u4ee3\u7801\u544a\u8bc9\u6d4f\u89c8\u5668\u6211\u4eec\u7528\u7684\u662f\u4ec0\u4e48\u7248\u672c\u7684 html \uff0c\u8ba9\u6d4f\u89c8\u5668\u66f4\u597d\u5730\u89e3\u6790\u5448\u73b0\u7f51\u9875\n```\n<!DOCTYPE html>```"}], "path": "notes.html"}];
+var DATA = [{"reviews": [{"description": "\u6ca1\u6709 doctype", "rate": "suggestion", "lineNum": 0, "comment": "\u901a\u5e38\u5728\u7f16\u5199 html \u65f6\uff0c\u5728\u5f00\u5934\u7b2c\u4e00\u884c\u6dfb\u52a0 `Doctype` \u7684\u4ee3\u7801\u544a\u8bc9\u6d4f\u89c8\u5668\u6211\u4eec\u7528\u7684\u662f\u4ec0\u4e48\u7248\u672c\u7684 html \r\n\r\n\u8ba9\u6d4f\u89c8\u5668\u66f4\u597d\u5730\u89e3\u6790\u5448\u73b0\u7f51\u9875\r\n```\r\n<!DOCTYPE html>\r\n```"}], "path": "notes.html"}];
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -59,6 +59,10 @@ ReviewData.prototype.getLineNum = function (pathIndex, reviewIndex) {
 
 ReviewData.prototype.getLineComment = function (pathIndex, reviewIndex) {
     return this.getReview(pathIndex, reviewIndex).comment;
+};
+
+ReviewData.prototype.getDescription = function (pathIndex, reviewIndex) {
+    return this.getReview(pathIndex, reviewIndex).description;
 };
 
 ReviewData.prototype.getRate = function (pathIndex, reviewIndex) {
@@ -130,6 +134,7 @@ AutoReview.prototype.selectCode = function () {
 AutoReview.prototype.comment = function () {
     var self = this;
     var lineNum = this.data.getLineNum(this.pathIndex, this.reviewIndex);
+    showMessage(this.data.getDescription(this.pathIndex, this.reviewIndex));
     reviewRate(this.data.getRate(this.pathIndex, this.reviewIndex));
     reviewComment(this.data.getLineComment(this.pathIndex,this.reviewIndex));
     clickSaveButton();
@@ -269,6 +274,10 @@ function isLoadedPageContent() {
     return $('#page-content .container-fluid').children().filter(function () {
         return $(this).attr("ng-show") == "loading";
     }).hasClass('ng-hide');
+}
+
+function showMessage(message) {
+    console.log(message);
 }
 
 var RATE = {

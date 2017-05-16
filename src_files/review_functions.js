@@ -116,6 +116,10 @@ function isLoadedPageContent() {
     }).hasClass('ng-hide');
 }
 
+function showMessage(message) {
+    console.log(message);
+}
+
 var RATE = {
     'awesome': 'awesome',
     'suggestion': 'nitpick',

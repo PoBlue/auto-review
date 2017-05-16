@@ -60,6 +60,10 @@ ReviewData.prototype.getLineComment = function (pathIndex, reviewIndex) {
     return this.getReview(pathIndex, reviewIndex).comment;
 };
 
+ReviewData.prototype.getDescription = function (pathIndex, reviewIndex) {
+    return this.getReview(pathIndex, reviewIndex).description;
+};
+
 ReviewData.prototype.getRate = function (pathIndex, reviewIndex) {
     var returnRate = RATE.awesome;
     switch (this.getReview(pathIndex, reviewIndex).rate){
@@ -129,6 +133,7 @@ AutoReview.prototype.selectCode = function () {
 AutoReview.prototype.comment = function () {
     var self = this;
     var lineNum = this.data.getLineNum(this.pathIndex, this.reviewIndex);
+    showMessage(this.data.getDescription(this.pathIndex, this.reviewIndex));
     reviewRate(this.data.getRate(this.pathIndex, this.reviewIndex));
     reviewComment(this.data.getLineComment(this.pathIndex,this.reviewIndex));
     clickSaveButton();
