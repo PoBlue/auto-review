@@ -85,14 +85,40 @@ def add_new_data(data_path):
     add new data to file in data_path
     """
     if request.method == 'POST':
-        file_path = 'data/' + data_path
-        print(parser_data(request.form, 1))
-        print(json_file_to_dict(file_path))
+        save_review_data(request.form, data_path)
         return "sucessful"
     elif request.method == 'GET':
         return render_template("new_data_review.html", data_path=data_path)
     else:
         return "Error: other method in add_new_data"
+
+
+def save_review_data(form, data_path):
+    """
+    add a new review data
+    """
+    file_path = 'data/' + data_path
+    review_dict = json_file_to_dict(file_path)
+    new_id = create_review_id(review_dict['reviews'])
+    new_review_data = parser_data(form, new_id)
+    review_dict['reviews'].append(new_review_data)
+    json_str = json.dumps(review_dict)
+    with open(file_path, 'w') as review_f:
+        review_f.write(json_str)
+
+
+def create_review_id(all_reviews):
+    """
+    create a id for data
+    """
+    if not all_reviews:
+        return 0
+
+    largest_id = 0
+    for data in all_reviews:
+        if data['id'] > 0:
+            largest_id = data['id']
+    return largest_id + 1
 
 
 def json_file_to_dict(path):
