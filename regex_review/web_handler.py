@@ -6,6 +6,7 @@ from flask import Flask, request, render_template, redirect, url_for, make_respo
 from main_center import Parser
 from base_func import get_filepaths, get_immediate_subdirectories
 from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file
+import json
 app = Flask(__name__)
 
 
@@ -58,7 +59,7 @@ def new_data_file():
     create new data file
     """
     if request.method == "GET":
-        return render_template("new_data.html")
+        return render_template("new_data_file.html")
     elif request.method == "POST":
         file_name = request.form["file_name"]
         if has_value(file_name):
@@ -76,6 +77,48 @@ def data_edit(data_path):
     edit data in data path
     """
     return data_path
+
+
+@app.route('/data/<data_path>/add', methods=['GET', 'POST'])
+def add_new_data(data_path):
+    """
+    add new data to file in data_path
+    """
+    if request.method == 'POST':
+        file_path = 'data/' + data_path
+        print(parser_data(request.form, 1))
+        print(json_file_to_dict(file_path))
+        return "sucessful"
+    elif request.method == 'GET':
+        return render_template("new_data_review.html", data_path=data_path)
+    else:
+        return "Error: other method in add_new_data"
+
+
+def json_file_to_dict(path):
+    """
+    paser a josn file to dict
+    """
+    with open(path, 'r') as review_file:
+        return json.load(review_file)
+
+
+def parser_data(form, review_id):
+    """
+    parser data from form
+    """
+    new_review_data = {}
+    new_review_data['regex'] = form['regex']
+    if has_value(form.get('is_missed')):
+        new_review_data['is_missed'] = True
+    else:
+        new_review_data['is_missed'] = False
+    new_review_data['comment'] = form['comment']
+    new_review_data['rate'] = form['rate']
+    if has_value(form.get('pos_regex')):
+        new_review_data['pos_regex'] = form['pos_regex']
+    new_review_data['id'] = review_id
+    return new_review_data
 
 
 if __name__ == '__main__':
