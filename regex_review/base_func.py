@@ -126,6 +126,12 @@ class ReviewData():
         """
         return self.data['pos_regex']
 
+    def get_description(self):
+        """
+        get the description of regex
+        """
+        return self.data['description']
+
 
 class JsReviewData():
     """
@@ -154,14 +160,15 @@ class JsReviewData():
         return json.dumps(self.all_datas)
 
 
-def generate_review_data(line_num, comment, rate):
+def generate_review_data(line_num, review):
     """
     generate review data to result file
     """
     new_review_data = {}
     new_review_data["lineNum"] = line_num
-    new_review_data["comment"] = comment
-    new_review_data["rate"] = rate
+    new_review_data["comment"] = review.get_comment()
+    new_review_data["rate"] = review.get_rate()
+    new_review_data["description"] = review.get_description()
     return new_review_data
 
 
@@ -197,8 +204,7 @@ def generate_js_review_data(file_path, review, regex):
     line_number = parse_file(file_path, regex)
     if line_number is not None:
         return generate_review_data(line_number,
-                                    review.get_comment(),
-                                    review.get_rate())
+                                    review)
     return None
 
 
