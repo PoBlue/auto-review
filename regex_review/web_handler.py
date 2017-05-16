@@ -5,7 +5,7 @@ hadler for web page
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from main_center import Parser
 from base_func import get_filepaths, get_immediate_subdirectories
-from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data
+from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data, json_file_to_dict
 app = Flask(__name__)
 
 
@@ -70,12 +70,42 @@ def new_data_file():
         return "falure"
 
 
-@app.route('/data/<data_path>/edit')
-def data_edit(data_path):
+@app.route('/data/<data_path>/<review_id>/edit', methods=['GET', 'POST'])
+def data_edit(data_path, review_id):
     """
     edit data in data path
     """
-    return data_path
+    if request.method == "POST":
+        return 'post'
+    elif request.method == "GET":
+        return data_edit_page_get(data_path, review_id)
+    else:
+        return 'Error in data_edit function: no method matched'
+
+
+def data_edit_page_get(data_path, review_id):
+    """
+    handle get method from data edit page
+    """
+    reviews = json_file_to_dict('data/' + data_path)['reviews']
+    founded_review_data = {}
+    for review_d in reviews:
+        if review_d['id'] == int(review_id):
+            founded_review_data = review_d
+    return render_template('data_review_edit.html',
+                           data_path=data_path,
+                           review=founded_review_data)
+
+
+@app.route('/data/<data_path>/list')
+def data_list(data_path):
+    """
+    edit data in data path
+    """
+    all_reviews = json_file_to_dict('data/' + data_path)['reviews']
+    return render_template('data_review_list.html',
+                           data_path=data_path,
+                           all_reviews=all_reviews)
 
 
 @app.route('/data/<data_path>/add', methods=['GET', 'POST'])
@@ -84,7 +114,9 @@ def add_new_data(data_path):
     add new data to file in data_path
     """
     if request.method == 'POST':
-        save_review_data(request.form, data_path)
+        file_path = 'data/' + data_path
+        review_dict = json_file_to_dict(file_path)
+        save_review_data(request.form, data_path, review_dict)
         return "sucessful"
     elif request.method == 'GET':
         return render_template("new_data_review.html", data_path=data_path)

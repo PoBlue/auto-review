@@ -10,7 +10,7 @@
     <div>
         <ul>
             {% for data_path in data_paths %}
-            <li><a href="{{ url_for('data_edit', data_path=data_path) }}">{{ data_path }}</a></li>
+            <li><a href="{{ url_for('data_list', data_path=data_path) }}">{{ data_path }}</a></li>
             {% endfor %}
         </ul>
     </div>

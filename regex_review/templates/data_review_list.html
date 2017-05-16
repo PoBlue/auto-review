@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>reivew list</title>
+    </head>
+    <body>
+        <h1>{{ data_path }}</h1>
+        <ul>
+        {% for review_data in all_reviews %}
+            <li><a href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a></li>
+        {% endfor %}
+        </ul>
+        <a href="{{ url_for('add_new_data', data_path=data_path) }}">add new review data</a>
+    </body>
+</html>

@@ -96,12 +96,11 @@ def create_review_file(name):
     return True
 
 
-def save_review_data(form, data_path):
+def save_review_data(form, data_path, review_dict):
     """
     add a new review data
     """
     file_path = 'data/' + data_path
-    review_dict = json_file_to_dict(file_path)
     new_id = create_review_id(review_dict['reviews'])
     new_review_data = parser_data(form, new_id)
     review_dict['reviews'].append(new_review_data)
