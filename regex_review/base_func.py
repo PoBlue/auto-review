@@ -216,7 +216,7 @@ def combine_comment_and_desc(reviews):
     """
     produce a new review
     """
-    comment_template = "#建议 %s ✨ %s \n---------\n %s \n"
+    comment_template = "# 建议 %s ✨ %s \n---------\n %s \n"
     description_template = "%s %s: %s\n"
     reviews_len = len(reviews)
     if reviews_len <= 1:

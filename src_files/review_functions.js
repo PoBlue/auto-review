@@ -106,14 +106,12 @@ function isLoadedCode() {
 }
 
 function isSavedComment(lineNumber) {
-    console.log(lineNumber);
     var commentViewer = $(".CodeMirror-code").children().eq(lineNumber)
             .find(".CodeMirror-linewidget").find(".comment-viewer");
     if (commentViewer.length === 0) {
         return false;
     }
     var isSaved = !commentViewer.hasClass('ng-hide');
-    console.log(isSaved);
     return isSaved;
 }
 
