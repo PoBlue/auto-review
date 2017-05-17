@@ -129,7 +129,7 @@ def add_new_data(data_path):
         file_path = 'data/' + data_path
         review_dict = json_file_to_dict(file_path)
         save_review_data(request.form, data_path, review_dict)
-        return "sucessful"
+        return redirect(url_for('data_list', data_path=data_path))
     elif request.method == 'GET':
         return render_template("new_data_review.html", data_path=data_path)
     else:
