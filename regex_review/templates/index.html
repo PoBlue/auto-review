@@ -15,13 +15,16 @@
                 <li><a href="{{ url_for('reset_project_path') }}">reset project path</a></li>
             </ul>
         </nav>
+        <div>
+            <input id="filter-text" type="text" placeholder="输入刷选文件名">
+        </div>
         <form action="/review" method="post">
-            <fieldset>
+            <fieldset id="files">
                 <legend>选择要自动 Review 的文件</legend>
                 {% for file_path in file_paths %}
                 <div>
                     <input type="checkbox" class="file-paths" name="file-paths" value="{{ file_path }}">
-                    <label>{{ file_path }}</label>
+                    <label class="file-name">{{ file_path }}</label>
                 </div>
                 {% endfor %}
             </fieldset>
@@ -42,3 +45,4 @@
 </body>
 
 </html>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
