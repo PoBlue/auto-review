@@ -119,6 +119,7 @@ AutoReview.prototype.selectFile = function(){
 
 AutoReview.prototype.selectCode = function () {
     var self = this;
+    console.log("click code");
     mouseDownInCode(this.data.getLineNum(this.pathIndex,this.reviewIndex));
 
     var rateRepeat = new Repeat(1000, function () {
@@ -137,8 +138,11 @@ AutoReview.prototype.comment = function () {
     reviewRate(this.data.getRate(this.pathIndex, this.reviewIndex));
     reviewComment(this.data.getLineComment(this.pathIndex,this.reviewIndex));
     clickSaveButton();
+    console.log("comment");
     var saveRepeat = new Repeat(1000, function () {
+        console.log("check saving: " + lineNum);
         if (isSavedComment(lineNum) === true) {
+            console.log("is saved");
             this.isEnd = true;
             self.saved();
         }
@@ -154,6 +158,7 @@ AutoReview.prototype.saved = function () {
         this.pathIndex += 1;
         this.reviewIndex = 0;
         this.selectFile();
+    } else {
+        console.log("finished");
     }
-    console.log("finished");
 };

@@ -1,4 +1,4 @@
-var DATA = [{"path": "notes.html", "reviews": [{"description": "1 : \u6ca1\u6709 doctype\n2 : \u6ca1\u6709 body\n", "lineNum": 0, "comment": "#\u5efa\u8bae 1 \u2728  \n---------\n \u901a\u5e38\u5728\u7f16\u5199 html \u65f6\uff0c\u5728\u5f00\u5934\u7b2c\u4e00\u884c\u6dfb\u52a0 `Doctype` \u7684\u4ee3\u7801\u544a\u8bc9\u6d4f\u89c8\u5668\u6211\u4eec\u7528\u7684\u662f\u4ec0\u4e48\u7248\u672c\u7684 html \r\n\r\n\u8ba9\u6d4f\u89c8\u5668\u66f4\u597d\u5730\u89e3\u6790\u5448\u73b0\u7f51\u9875\r\n```\r\n<!DOCTYPE html>\r\n``` \n#\u5efa\u8bae 2 \u2728  \n---------\n \u4e00\u4e2a\u5b8c\u6574\u7684 HTML \u6587\u6863\u7684\u7ed3\u6784\u5e94\u4e3a\u5982\u4e0b\uff1a\r\n```  \r\n<!DOCTYPE html>\r\n<html>\r\n<head>\r\n  <title>\u6587\u6863\u7684\u6807\u9898</title>\r\n</head>\r\n\r\n<body>  \r\n\u6587\u6863\u7684\u5185\u5bb9... ...\r\n</body>\r\n\r\n</html>\r\n```\r\n## \u53c2\u8003\uff1a\r\n- [HTML\u6587\u6863\u7ed3\u6784](http://www.debugrun.com/a/KAfq9TW.html) \n", "rate": "suggestion"}, {"description": "title \u6ca1\u6709\u5728 head \u6807\u7b7e\u91cc\u9762", "lineNum": 4, "comment": "`<title>` \u6807\u7b7e\u5e94\u653e\u5728 `<head>` \u6807\u7b7e\u91cc\u9762\r\n\r\n```\r\n<head>\r\n  <title>\u6587\u6863\u7684\u6807\u9898</title>\r\n</head>\r\n```\r\n\r\n\u8be6\u7ec6\u7684 title \u6807\u7b7e\u7684\u63cf\u8ff0\uff0c\u53c2\u8003[\u8fd9\u91cc](https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/title)", "rate": "suggestion"}]}];
+var DATA = [{"reviews": [{"description": "\u8d5e: \u7528 utf-8 \u652f\u6301\u4e2d\u6587", "rate": "awesome", "comment": "\u4f7f\u7528`<meta>`\u6807\u7b7e\u6307\u5b9a `utf-8` \uff0c\u8ba9\u6d4f\u89c8\u5668\u80fd\u591f\u652f\u6301\u4e2d\u6587\u7684\u663e\u793a", "lineNum": 2}], "path": "my first homework.html"}];
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -120,6 +120,7 @@ AutoReview.prototype.selectFile = function(){
 
 AutoReview.prototype.selectCode = function () {
     var self = this;
+    console.log("click code");
     mouseDownInCode(this.data.getLineNum(this.pathIndex,this.reviewIndex));
 
     var rateRepeat = new Repeat(1000, function () {
@@ -138,8 +139,11 @@ AutoReview.prototype.comment = function () {
     reviewRate(this.data.getRate(this.pathIndex, this.reviewIndex));
     reviewComment(this.data.getLineComment(this.pathIndex,this.reviewIndex));
     clickSaveButton();
+    console.log("comment");
     var saveRepeat = new Repeat(1000, function () {
+        console.log("check saving: " + lineNum);
         if (isSavedComment(lineNum) === true) {
+            console.log("is saved");
             this.isEnd = true;
             self.saved();
         }
@@ -155,8 +159,9 @@ AutoReview.prototype.saved = function () {
         this.pathIndex += 1;
         this.reviewIndex = 0;
         this.selectFile();
+    } else {
+        console.log("finished");
     }
-    console.log("finished");
 };
 function clickTab(tabName) {
     $('.navbar-item').filter(function () {
@@ -266,14 +271,12 @@ function isLoadedCode() {
 }
 
 function isSavedComment(lineNumber) {
-    console.log(lineNumber);
     var commentViewer = $(".CodeMirror-code").children().eq(lineNumber)
             .find(".CodeMirror-linewidget").find(".comment-viewer");
     if (commentViewer.length === 0) {
         return false;
     }
     var isSaved = !commentViewer.hasClass('ng-hide');
-    console.log(isSaved);
     return isSaved;
 }
 

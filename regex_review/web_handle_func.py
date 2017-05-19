@@ -128,7 +128,7 @@ def create_review_id(all_reviews):
 
     largest_id = 0
     for data in all_reviews:
-        if data['id'] > 0:
+        if data['id'] > largest_id:
             largest_id = data['id']
     return largest_id + 1
 
