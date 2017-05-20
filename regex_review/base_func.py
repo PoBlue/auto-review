@@ -293,6 +293,7 @@ def regex_dir(dir_path, selected_files, data_file):
             if new_review_data is not None:
                 if review.get_is_missed() is not True:
                     js_review_data.add_review(path, new_review_data)
+                    break
             else:
                 if review.get_pos_regex() != "":
                     regex = review.get_pos_regex()
@@ -301,6 +302,7 @@ def regex_dir(dir_path, selected_files, data_file):
                                                               regex)
                     if new_review_data is not None:
                         js_review_data.add_review(path, new_review_data)
+                        break
     return js_review_data
 
 
