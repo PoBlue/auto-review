@@ -1,4 +1,4 @@
-var DATA = [{"path": "app/src/main/res/layout/activity_album.xml", "reviews": [{"description": "\u5efa\u8bae: \u4f7f\u7528 ListView \u4ee3\u66ff\u91cd\u590d LinearLayout", "comment": "\u8981\u5b9e\u73b0\u4e00\u4e2a\u64ad\u653e\u5217\u8868\uff0c\u9996\u5148\u5c31\u5f97\u9700\u8981\u60f3\u4e00\u60f3\u54ea\u4e00\u4e2a\u63a7\u4ef6\u6bd4\u8f83\u5408\u9002\uff0c\u65b9\u4fbf\u5b9e\u73b0\ud83e\udd14\ufe0f\r\n\r\n\u901a\u8fc7\u4e0a\u7f51\u8c03\u67e5\uff0c\u6211\u4eec\u53ef\u4ee5\u53d1\u73b0\u63a7\u4ef6 `ListView` \u6bd4\u8f83\u9002\u5408\u7528\u6765\u5b9e\u73b0\u5e03\u5c40\u91cd\u590d\u7684\u4e00\u5217\u5217\u5e03\u5c40\uff0c\u65e2\u65b9\u4fbf\u53c8\u8282\u7701\u5185\u5b58\uff0c\u5177\u4f53\u5b9e\u73b0\u53ef\u4ee5\u53c2\u8003\uff1a\r\n\r\n-  [Using lists in Android wth ListView - Tutorial](http://www.vogella.com/tutorials/AndroidListView/article.html)", "rate": "suggestion", "lineNum": 1}]}];
+var DATA = [];
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -226,7 +226,7 @@ function mouseDownInCode(lineNumber) {
     var codeElement = $(".CodeMirror-code").children().eq(lineNumber);
     var codeY = codeElement.offset().top - $(document).scrollTop();
 
-    var event = mouseEvent("mousedown", 0, 0, 300, codeY);
+    var event = mouseEvent("mousedown", 0, 0, 450, codeY);
     var elements = document.getElementsByClassName("CodeMirror-code");
     dispatchEvent(elements[0], event);
 }
