@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>复制数据</title>
+</head>
+
+<body>
+    <form action="{{ url_for('copy_review', data_path=data_path, review_id=review_id) }}" method="post">
+        <fieldset>
+            <legend>项目</legend>
+            {% for project_path in project_paths %}
+            <div>
+                <input type="radio" class="project-paths" name="select-project-path" value="{{ project_path }}">
+                <label>{{ project_path }}</label>
+            </div>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value="Submit">
+    </form>
+    <a href="{{ url_for('data_list', data_path=data_path) }}">cancel</a><br>
+</body>
+
+</html>

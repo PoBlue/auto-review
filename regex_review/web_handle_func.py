@@ -175,3 +175,44 @@ def remove_review_data(data_path, review_id):
             break
         remove_index += 1
     return review_dict
+
+
+def get_review_with_id(data_path, review_id):
+    """
+    get a review with id and data_path
+    """
+    reviews = get_reviews_with_data_path(data_path)
+    founded_review_data = {}
+    for review_d in reviews:
+        if review_d['id'] == review_id:
+            founded_review_data = review_d
+    return founded_review_data
+
+
+def get_reviews_with_data_path(data_path):
+    """
+    get all reviews in data_path
+    """
+    all_reviews = json_file_to_dict('data/' + data_path)['reviews']
+    return all_reviews
+
+
+def create_review_id_in_data_path(data_path):
+    """
+    create an review id in a data path
+    """
+    all_reviews = get_reviews_with_data_path(data_path)
+    return create_review_id(all_reviews)
+
+
+def copy_review_to_file(from_path, to_path, review_id):
+    """
+    copy an review to a file
+    """
+    founded_review = get_review_with_id(from_path, review_id)
+    selected_path_reviews = get_reviews_with_data_path(to_path)
+    new_review_id = create_review_id_in_data_path(to_path)
+    founded_review['id'] = new_review_id
+    selected_path_reviews.append(founded_review)
+    review_dict = {'reviews': selected_path_reviews}
+    save_review_to_file(to_path, review_dict)

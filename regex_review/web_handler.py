@@ -5,7 +5,7 @@ hadler for web page
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from main_center import Parser
 from base_func import get_filepaths, get_immediate_subdirectories
-from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data, json_file_to_dict, remove_review_data, save_review_to_file
+from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data, json_file_to_dict, remove_review_data, save_review_to_file, get_review_with_id, copy_review_to_file
 app = Flask(__name__)
 
 
@@ -31,6 +31,25 @@ def setting_handle():
         return setting_page_post(request)
     else:
         return setting_page_get(request)
+
+
+@app.route('/data/<data_path>/<int:review_id>/copy', methods=['GET', 'POST'])
+def copy_review(data_path, review_id):
+    """
+    copy a review data to other file
+    """
+    if request.method == 'POST':
+        print(data_path)
+        selected_path = request.form['select-project-path']
+        copy_review_to_file(data_path, selected_path, review_id)
+        return redirect(url_for('data_list', data_path=selected_path))
+    elif request.method == 'GET':
+        all_data_paths = get_filepaths("data/")
+        return render_template('data_copy.html', data_path=data_path,
+                               project_paths=all_data_paths,
+                               review_id=review_id)
+    else:
+        return "error in copy file"
 
 
 @app.route('/reset/path')
@@ -89,11 +108,7 @@ def data_edit_page_get(data_path, review_id):
     """
     handle get method from data edit page
     """
-    reviews = json_file_to_dict('data/' + data_path)['reviews']
-    founded_review_data = {}
-    for review_d in reviews:
-        if review_d['id'] == review_id:
-            founded_review_data = review_d
+    founded_review_data = get_review_with_id(data_path, review_id)
     return render_template('data_review_edit.html',
                            data_path=data_path,
                            review=founded_review_data)
