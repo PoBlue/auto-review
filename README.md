@@ -7,9 +7,9 @@
 
 ## 环境
 
-1. Flask , python 的一个库, 我的版本为 `0.11.1`
-2. Chrome 浏览器, 我的版本为 `58.0.3029`
-3. Python 3.0 以上, 我的版本为 `3.5.2`
+1. Flask , python 的一个库
+2. Chrome 浏览器
+3. Python 3.0 以上
 4. Review 的语言需要是 `英文的`，如下图的, 评价，编辑等都是英文的
 ![en-version](http://i1.piimg.com/519918/1403ec45256c786f.png)
 
