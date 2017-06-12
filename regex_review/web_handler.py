@@ -151,6 +151,24 @@ def add_new_data(data_path):
         return "Error: other method in add_new_data"
 
 
+@app.route('/data/search', methods=['GET'])
+def search_data():
+    """
+    search review data
+    """
+    filter_path = ['.DS_Store']
+    all_data_paths = get_filepaths("data/")
+    list_data = []
+    for data_path in all_data_paths:
+        if data_path in filter_path:
+            continue
+        data = {}
+        data['path'] = data_path
+        data['reviews'] = json_file_to_dict('data/' + data_path)['reviews']
+        list_data.append(data)
+    return render_template('data_search.html', list_data=list_data)
+
+
 if __name__ == '__main__':
     app.debug = True
     app.run()

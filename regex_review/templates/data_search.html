@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>reivew data search</title>
+    </head>
+    <body>
+        <div>
+            <input id="filter-text" type="text" placeholder="输入刷选的关键字">
+        </div>
+        {% for data in list_data %}
+            <ul>
+            {% for review_data in data['reviews']%}
+                <li class="description">
+                    <span>{{ data['path'] }}</span>||
+                    <a href="{{ url_for('data_edit', data_path=data['path'], review_id=review_data['id']) }}">{{ review_data['description'] }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+    </body>
+</html>
+<script src="{{ url_for('static', filename='js/data_search.js') }}"></script>

@@ -30,8 +30,10 @@
             <input type="submit" value="Submit">
         </div>
     </form>
-    <a href="{{ url_for('data_list', data_path=data_path) }}">cancel</a><br>
-    <a href="{{ url_for('data_remove', review_id=review['id'] ,data_path=data_path) }}">remove</a>
+    <a href="{{ url_for('data_list', data_path=data_path) }}">cancel</a><br><br>
+    <a href="{{ url_for('data_remove', review_id=review['id'] ,data_path=data_path) }}">remove</a><br>
+    <hr>
+    <a href="{{ url_for('copy_review', data_path=data_path, review_id=review['id']) }}">copy</a>
 </body>
 
 </html>

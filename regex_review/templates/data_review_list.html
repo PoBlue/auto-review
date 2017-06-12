@@ -5,13 +5,18 @@
         <title>reivew list</title>
     </head>
     <body>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('search_data') }}">Search Data</a></li>
+            </ul>
+        </nav>
         <h1>{{ data_path }}</h1>
         <ul>
         {% for review_data in all_reviews %}
             <li>
                 <a href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a>
-                /
-                <a href="{{ url_for('copy_review', data_path=data_path, review_id=review_data['id']) }}">复制</a>
+                ///
+                <a href="{{ url_for('copy_review', data_path=data_path, review_id=review_data['id']) }}">Copy</a>
             </li>
         {% endfor %}
         </ul>

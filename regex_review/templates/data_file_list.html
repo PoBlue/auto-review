@@ -8,6 +8,11 @@
 
 <body>
     <div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('search_data') }}">搜索数据</a></li>
+            </ul>
+        </nav>
         <ul>
             {% for data_path in data_paths %}
             <li><a href="{{ url_for('data_list', data_path=data_path) }}">{{ data_path }}</a></li>
