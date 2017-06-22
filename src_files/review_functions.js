@@ -5,6 +5,7 @@ function clickTab(tabName) {
 }
 
 function clickFile(fileName) {
+    console.log(fileName);
     $('.code-section-item-title strong').filter(function () {
         return $(this).text() == fileName;
     }).trigger("click");
