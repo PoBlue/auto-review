@@ -1,0 +1,15 @@
+.no-match-review li {
+    margin: 4px;
+}
+
+.match-review li {
+    margin: 4px;
+}
+
+a.hover {
+    text-decoration: none;
+}
+
+a.hover:hover {
+    text-decoration: underline;
+}

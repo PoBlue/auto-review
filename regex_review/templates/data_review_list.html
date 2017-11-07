@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>reivew list</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     </head>
     <body>
         <nav>
@@ -13,10 +14,10 @@
         <h1>{{ data_path }}</h1>
 
         <h2>不匹配的评论</h2>
-        <ul>
+        <ul class="no-match-review">
         {% for review_data in no_match_reviews %}
             <li>
-                <a href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a>
+                <a class="hover" href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a>
                 ///
                 <a href="{{ url_for('copy_review', data_path=data_path, review_id=review_data['id']) }}">Copy</a>
             </li>
@@ -24,10 +25,10 @@
         </ul>
 
         <h2>匹配的评论</h2>
-        <ul>
+        <ul class="match-review">
         {% for review_data in match_reviews %}
             <li>
-                <a href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a>
+                <a class="hover" href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a>
                 ///
                 <a href="{{ url_for('copy_review', data_path=data_path, review_id=review_data['id']) }}">Copy</a>
             </li>
