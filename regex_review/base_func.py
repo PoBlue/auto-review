@@ -133,6 +133,12 @@ class ReviewData():
         """
         return self.data['description']
 
+    def is_match(self):
+        """
+        need to be match?
+        """
+        return self.data['isMatch']
+
 
 class JsReviewData():
     """
@@ -285,6 +291,9 @@ def regex_dir(dir_path, selected_files, data_file):
     """
     js_review_data = JsReviewData()
     for review in AllReviewsData(data_file):
+        # pass if condition is not satisfied
+        if not condiction_check(review):
+            continue
         for path in selected_files:
             file_path = dir_path + path
             new_review_data = generate_js_review_data(file_path,
@@ -304,6 +313,18 @@ def regex_dir(dir_path, selected_files, data_file):
                         js_review_data.add_review(path, new_review_data)
                         break
     return js_review_data
+
+
+def condiction_check(review):
+    """
+    check if review pass condcitons
+    """
+    is_match = False #check if review need to match
+    if review.is_match():
+        is_match = True
+    else:
+        is_match = False
+    return is_match
 
 
 def generate_js_review_data(file_path, review, regex):
