@@ -4,32 +4,43 @@
 <head>
     <meta charset="utf-8">
     <title>创建新的review数据</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
     <form action="{{ url_for('add_new_data', data_path=data_path) }}" method="post">
-        <div>
-            <input type="text" name="regex" placeholder="填写正则表达式，检查Review">
+        <div class="review-regex">
+            <div class="large-input-filed">
+                <input type="text" name="regex" placeholder="填写正则表达式，检查Review">
+            </div>
+            <div>
+                <input name="is_matched" value="match" type="checkbox"><label for="is_matched">需要匹配正则表达式吗?</label>
+            </div>
         </div>
-        <div>
-            <input name="is_matched" value="match" type="checkbox"><label for="is_matched">需要匹配正则表达式吗?</label>
+
+        <div class="review-content">
+            <div class="large-input-filed">
+                <input type="text" name="description" placeholder="填写 review 描述">
+            </div>
+            <textarea name="comment" id="review" cols="30" rows="10" placeholder="review"></textarea>
+            <div>
+                <input type="radio" name="rate" value="awesome"><label for="rate">awesome</label>
+                <input type="radio" name="rate" value="suggestion"><label for="suggestion">suggestion</label>
+                <input type="radio" name="rate" value="require"><label for="require">require</label>
+            </div>
         </div>
-        <div>
-            <input type="text" name="description" placeholder="填写 review 描述">
+
+        <div class="review-miss-regex">
+            <div>
+                <input name="is_missed" value="miss" type="checkbox"><label for="is_missed">需要检查代码遗漏的情况?</label>
+            </div>
+
+            <div class="large-input-filed">
+                <input type="text" name="pos_regex" placeholder="寻找review位置的正则表达式">
+            </div>
         </div>
-        <textarea name="comment" id="review" cols="30" rows="10" placeholder="review"></textarea>
-        <div>
-            <input type="radio" name="rate" value="awesome"><label for="rate">awesome</label>
-            <input type="radio" name="rate" value="suggestion"><label for="suggestion">suggestion</label>
-            <input type="radio" name="rate" value="require"><label for="require">require</label>
-        </div>
-        <div>
-            <input name="is_missed" value="miss" type="checkbox"><label for="is_missed">需要检查代码遗漏的情况?</label>
-        </div>
-        <div>
-            <input type="text" name="pos_regex" placeholder="寻找review位置的正则表达式">
-        </div>
-        <div>
+
+        <div class="review-submit-btn">
             <input type="submit" value="Submit">
         </div>
     </form>

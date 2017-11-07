@@ -13,3 +13,24 @@ a.hover {
 a.hover:hover {
     text-decoration: underline;
 }
+
+.review-submit-btn,
+.review-regex,
+.review-miss-regex,
+.review-content {
+    border: 1px solid black;
+    padding: 16px;
+    margin: 16px;
+}
+
+.large-input-filed input {
+    height: 18px;
+    width: 250px;
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.review-submit-btn input {
+    font-size: 16px;
+}
