@@ -151,6 +151,13 @@ def parser_data(form, review_id):
         new_review_data['is_missed'] = True
     else:
         new_review_data['is_missed'] = False
+
+    # isMatched key set
+    if has_value(form.get('is_matched')):
+        new_review_data['isMatch'] = True
+    else:
+        new_review_data['isMatch'] = False
+
     new_review_data['comment'] = form['comment']
     new_review_data['rate'] = form['rate']
     if has_value(form.get('pos_regex')):

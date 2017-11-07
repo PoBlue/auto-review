@@ -9,13 +9,16 @@
 <body>
     <form action="{{ url_for('data_edit', data_path=data_path, review_id=review['id']) }}" method="post">
         <div>
+            <input name="is_matched" value="match" type="checkbox" {% if review['isMatch'] == true %}checked{% endif %}><label for="is_matched">需要匹配正则表达式吗?</label>
+        </div>
+        <div>
             <input type="text" name="regex" placeholder="填写正则表达式，检查Review" value="{{ review['regex'] }}">
         </div>
         <div>
             <input type="text" name="description" placeholder="填写 review 描述" value="{{ review['description'] }}">
         </div>
         <div>
-            <input name="is_missed" value="miss" type="checkbox" {% if review['is_missed'] == true %}checked{% endif %}><label for="is_missed">检查代码遗漏的情况</label>
+            <input name="is_missed" value="miss" type="checkbox" {% if review['is_missed'] == true %}checked{% endif %}><label for="is_missed">需要检查代码遗漏的情况?</label>
         </div>
         <textarea name="comment" id="review" cols="30" rows="10" placeholder="review">{{ review['comment'] }}</textarea>
         <div>
