@@ -5,7 +5,7 @@ hadler for web page
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from main_center import Parser
 from base_func import get_filepaths, get_immediate_subdirectories
-from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data, json_file_to_dict, remove_review_data, save_review_to_file, get_review_with_id, copy_review_to_file
+from web_handle_func import review_get, review_post, setting_page_get, setting_page_post, has_value, create_review_file, save_review_data, json_file_to_dict, remove_review_data, save_review_to_file, get_review_with_id, copy_review_to_file, get_match_and_nomatch_reviews
 app = Flask(__name__)
 
 
@@ -130,9 +130,11 @@ def data_list(data_path):
     edit data in data path
     """
     all_reviews = json_file_to_dict('data/' + data_path)['reviews']
+    match_reviews, no_match_reviews = get_match_and_nomatch_reviews(all_reviews)
     return render_template('data_review_list.html',
                            data_path=data_path,
-                           all_reviews=all_reviews)
+                           match_reviews=match_reviews,
+                           no_match_reviews=no_match_reviews)
 
 
 @app.route('/data/<data_path>/add', methods=['GET', 'POST'])

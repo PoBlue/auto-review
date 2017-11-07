@@ -140,6 +140,20 @@ def json_file_to_dict(path):
     with open(path, 'r') as review_file:
         return json.load(review_file)
 
+def get_match_and_nomatch_reviews(reviews):
+    """
+    get match and no match reviews from all reviews
+    """
+    match_reviews = []
+    no_match_reviews = []
+
+    for review in reviews:
+        if review['isMatch']:
+            match_reviews.append(review)
+        else:
+            no_match_reviews.append(review)
+
+    return (match_reviews, no_match_reviews)
 
 def parser_data(form, review_id):
     """
