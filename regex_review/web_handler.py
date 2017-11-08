@@ -2,6 +2,7 @@
 """
 hadler for web page
 """
+import json
 from flask import Flask, request, render_template, redirect, url_for, make_response
 from main_center import Parser
 from base_func import get_filepaths, get_immediate_subdirectories
@@ -39,7 +40,6 @@ def copy_review(data_path, review_id):
     copy a review data to other file
     """
     if request.method == 'POST':
-        print(data_path)
         selected_path = request.form['select-project-path']
         copy_review_to_file(data_path, selected_path, review_id)
         return redirect(url_for('data_list', data_path=selected_path))
@@ -169,6 +169,17 @@ def search_data():
         data['reviews'] = json_file_to_dict('data/' + data_path)['reviews']
         list_data.append(data)
     return render_template('data_search.html', list_data=list_data)
+
+
+@app.route('/json/<data_path>/<int:review_id>', methods=['GET'])
+def get_json_review(data_path, review_id):
+    """
+    get json data with review id in data path
+    """
+    json_data = {}
+    founded_review_data = get_review_with_id(data_path, review_id)
+    json_data['reviewText'] = founded_review_data['comment']
+    return json.dumps(json_data)
 
 
 if __name__ == '__main__':

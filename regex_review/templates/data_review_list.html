@@ -20,6 +20,8 @@
                 <a class="hover" href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a>
                 ///
                 <a href="{{ url_for('copy_review', data_path=data_path, review_id=review_data['id']) }}">Copy</a>
+                ///
+                <button class="copy-paste" type="button">复制到粘贴板</button>
             </li>
         {% endfor %}
         </ul>
@@ -31,10 +33,13 @@
                 <a class="hover" href="{{ url_for('data_edit', data_path=data_path, review_id=review_data['id']) }}">{{ review_data['description'] }}</a>
                 ///
                 <a href="{{ url_for('copy_review', data_path=data_path, review_id=review_data['id']) }}">Copy</a>
+                ///
+                <button class="copy-paste" type="button">复制到粘贴板</button>
             </li>
         {% endfor %}
         </ul>
         <a href="{{ url_for('add_new_data', data_path=data_path) }}">add new review data</a><br>
         <a href="{{ url_for('review_data') }}">back</a>
     </body>
+    <script src="{{ url_for('static', filename='js/data_list.js') }}"></script>
 </html>
