@@ -1,7 +1,8 @@
 "use strict";
 
+// search page searcher
 document.getElementById("filter-text")
-    .addEventListener("input", filterTextHandler);
+    .addEventListener("input", filterTextHandler); 
 
 function filterTextHandler(event){
     var inputText = event.path[0].value;
@@ -32,6 +33,7 @@ function getAllReviewsElement() {
     return document.getElementsByClassName('description');
 }
 
+//set @element visable if @isVisable is true
 function setElementVisable(isVisable, element) {
     if (isVisable) {
         element.style.display = "block";

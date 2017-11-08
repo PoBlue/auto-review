@@ -7,6 +7,7 @@ function getAllFilesElement() {
     return document.getElementById("files").getElementsByTagName("div");
 }
 
+//get file name according to the element
 function getFileName(element) {
     return element.getElementsByTagName("label")[0].innerHTML;
 }

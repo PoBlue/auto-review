@@ -13,9 +13,13 @@
                 <li><a href="{{ url_for('search_data') }}">搜索数据</a></li>
             </ul>
         </nav>
+        <h1>Review Data 文件</h1>
+        <div>
+            <input id="filter-file" type="text" placeholder="输入刷选的关键字">
+        </div>
         <ul>
             {% for data_path in data_paths %}
-            <li><a href="{{ url_for('data_list', data_path=data_path) }}">{{ data_path }}</a></li>
+            <li class="data-file"><a href="{{ url_for('data_list', data_path=data_path) }}">{{ data_path }}</a></li>
             {% endfor %}
         </ul>
     </div>
@@ -23,5 +27,6 @@
         <a href="{{ url_for('new_data_file') }}">create new data file</a>
     </div>
 </body>
+<script src="{{ url_for('static', filename='js/file_search.js') }}"></script>
 
 </html>
