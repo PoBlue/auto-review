@@ -29,7 +29,11 @@
                 {% endfor %}
             </fieldset>
 
-            <fieldset>
+            <div>
+                <input id="filter-data-review-text" type="text" placeholder="输入刷选 Review 数据名">
+            </div>
+
+            <fieldset id="review-data-files">
                 <legend>项目 Review 的数据</legend>
                 {% for data_path in data_paths %}
                 <div>

@@ -3,6 +3,29 @@
 document.getElementById("filter-text")
     .addEventListener("input", filterTextHandler);
 
+document.getElementById("filter-data-review-text")
+    .addEventListener("input", filterReviewDataHandler);
+
+//handler for id: filter-data-review-text
+function filterReviewDataHandler(event) {
+    var inputText = event.path[0].value;
+    showReviewDataElement(inputText);
+}
+
+//show review data according text
+function showReviewDataElement(text) {
+    var elements = getAllReviewsElement();
+    for (var i = 0; i < elements.length; i++){
+        var element = elements[i];
+        setElementVisable(checkFilterFileName(text, getFileName(element)), element);
+    }
+}
+
+//get all reviews
+function getAllReviewsElement() {
+    return document.getElementById("review-data-files").getElementsByTagName("div");
+}
+
 function getAllFilesElement() {
     return document.getElementById("files").getElementsByTagName("div");
 }
